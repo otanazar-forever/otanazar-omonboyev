@@ -1,0 +1,251 @@
+
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interesting Game</title>
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f8f9fa;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .mj {
+      border: 5px solid black;
+      border-radius: 20px;
+      padding: 20px;
+      max-width: 900px;
+      margin: auto;
+      background: white;
+    }
+
+    .scoreboard {
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 30px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .scoreboard div {
+      padding: 10px 20px;
+      border-radius: 10px;
+      color: white;
+    }
+
+    #user-score {
+      background-color: red;
+    }
+
+    #computer-score {
+      background-color: blue;
+    }
+
+    .choices {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
+    }
+
+    .choice {
+      cursor: pointer;
+      text-align: center;
+      transition: transform 0.2s;
+    }
+
+    .choice:hover {
+      transform: scale(1.1);
+    }
+
+    .choice i {
+      font-size: 60px;
+      margin-bottom: 10px;
+    }
+
+    .results-container {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      margin-top: 30px;
+      flex-wrap: wrap;
+    }
+
+    .result-box, .result-boh {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .result-icon {
+      font-size: 80px;
+      color: #333;
+    }
+
+    .result-text {
+      margin-top: 30px;
+      font-size: 24px;
+      position: relative;
+      top: 150px;
+      font-weight: bold;
+      color: #007bff;
+    }
+
+    #restart-btn {
+      background-color: #ff4757;
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      font-size: 18px;
+      font-weight: bold;
+      border-radius: 30px;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .btn{
+      background-color: #ff4757;
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      font-size: 18px;
+      font-weight: bold;
+      border-radius: 30px;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    a{
+      text-decoration: none;
+      color: white;
+    }
+
+    #restart-btn:hover {
+      background-color: #ff6b81;
+      box-shadow: 0 8px 20px rgba(255, 107, 129, 0.8);
+    }
+
+    @media (max-width: 600px) {
+      .scoreboard {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .choices {
+        gap: 20px;
+      }
+
+      .result-icon {
+        font-size: 60px;
+      }
+
+      .choice i {
+        font-size: 45px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="mj">
+    <div class="scoreboard">
+      <div id="user-score">User: 0</div>
+      <div id="computer-score">Computer: 0</div>
+    </div>
+
+    <div class="results-container">
+      <div class="result-box">
+        <h3>User:</h3>
+        <div id="user-choice-icon" class="result-icon"><i class="fas fa-question"></i></div>
+      </div>
+      <div class="result-boh">
+        <h3>Computer:</h3>
+        <div id="computer-choice-icon" class="result-icon"><i class="fas fa-question"></i></div>
+      </div>
+    </div>
+
+    <div class="result-text" id="result"></div>
+
+    <div class="choices">
+      <div class="choice" onclick="play('tosh', this)">
+        <i class="fa-solid fa-hill-rockslide"></i>
+        <p>Tosh</p>
+      </div>
+      <div class="choice" onclick="play('qaychi', this)">
+        <i class="fa-solid fa-scissors"></i>
+        <p>Qaychi</p>
+      </div>
+      <div class="choice" onclick="play('qogoz', this)">
+        <i class="fa-solid fa-toilet-paper"></i>
+        <p>Qog‘oz</p>
+      </div>
+    </div>
+
+    <button id="restart-btn" onclick="restartGame()">Restart</button>
+    <button class="btn"><a href="index.html">Exit</a></button>
+  </div>
+
+  <script>
+    let userScore = 0;
+    let computerScore = 0;
+
+    const icons = {
+      'tosh': '<i class="fa-solid fa-hill-rockslide"></i>',
+      'qaychi': '<i class="fa-solid fa-scissors"></i>',
+      'qogoz': '<i class="fa-solid fa-toilet-paper"></i>',
+    };
+
+    const choiceNames = {
+      'tosh': 'Tosh',
+      'qaychi': 'Qaychi',
+      'qogoz': 'Qog‘oz'
+    };
+
+    function play(userChoice, element) {
+      const choices = ['tosh', 'qaychi', 'qogoz'];
+      const computerChoice = choices[Math.floor(Math.random() * choices.length)];
+
+      document.getElementById('user-choice-icon').innerHTML = icons[userChoice];
+      document.getElementById('computer-choice-icon').innerHTML = icons[computerChoice];
+
+      let result = '';
+      if (userChoice === computerChoice) {
+        result = "Durrang!";
+      } else if (
+        (userChoice === 'tosh' && computerChoice === 'qaychi') ||
+        (userChoice === 'qaychi' && computerChoice === 'qogoz') ||
+        (userChoice === 'qogoz' && computerChoice === 'tosh')
+      ) {
+        result = "User Win! 🎉";
+        userScore++;
+      } else {
+        result = "Computer Win! 😢";
+        computerScore++;
+      }
+
+      document.getElementById("result").innerText = result;
+      document.getElementById("user-score").innerText = `User: ${userScore}`;
+      document.getElementById("computer-score").innerText = `Computer: ${computerScore}`;
+    }
+
+    function restartGame() {
+      userScore = 0;
+      computerScore = 0;
+      document.getElementById("user-score").innerText = `User: ${userScore}`;
+      document.getElementById("computer-score").innerText = `Computer: ${computerScore}`;
+      document.getElementById("user-choice-icon").innerHTML = '<i class="fas fa-question"></i>';
+      document.getElementById("computer-choice-icon").innerHTML = '<i class="fas fa-question"></i>';
+      document.getElementById("result").innerText = '';
+    }
+  </script>
+</body>
+</html>

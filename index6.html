@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Find Number</title>
+    <style>
+        body {
+            text-align: center;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .bar {
+            width: 90%;
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+            padding: 30px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        h1 {
+            font-size: 22px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #0077b6;
+            margin: 10px 0;
+        }
+
+        .inp {
+            width: 80%;
+            max-width: 300px;
+            padding: 12px 15px;
+            font-size: 16px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            outline: none;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .inp:focus {
+            border-color: #0077b6;
+            box-shadow: 0 0 10px rgba(0, 119, 182, 0.4);
+        }
+
+        button {
+            width: 240px;
+            padding: 12px;
+            font-size: 16px;
+            color: white;
+            background: linear-gradient(to right, #06beb6, #48b1bf);
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: linear-gradient(to right, #48b1bf, #06beb6);
+        }
+
+        .javob {
+            font-weight: bold;
+            font-size: 18px;
+            margin-top: 10px;
+            transition: color 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        a{
+            text-decoration: none;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bar">
+        <h1>🤖 Salom! Men 0 dan 9 gacha bir son o‘yladim. Topa olasanmi? 🤔</h1>
+        <h2 class="jvb">❓</h2>
+        <input type="number" class="inp" placeholder="0 dan 9 gacha son kiriting" onchange="run()">
+        <p class="javob">🎙️ Javob shu yerda chiqadi</p>
+        <button onclick="tug()">Topa olmadim, ko‘rsat!</button>
+        <button><a href="index.html">Exit</a></button>
+    </div>
+
+    <script>
+        let randomNumber = Math.floor(Math.random() * 10);
+        let attempts = 0;
+
+        function run() {
+            const box = parseInt(document.querySelector('.inp').value);
+            const javob = document.querySelector('.javob');
+            const h1 = document.querySelector('.jvb');
+            attempts++;
+
+            if (box === randomNumber) {
+                javob.innerHTML = `🎉 Ofarin! Sen ${attempts} urinishda topding.`;
+                h1.innerHTML = `👏 To‘g‘ri! Men ${randomNumber} sonini o‘ylagan edim.`;
+                javob.style.color = "green";
+            } else {
+                javob.innerHTML = `❌ Noto‘g‘ri! ${attempts} marta urinding.`;
+                javob.style.color = "red";
+            }
+        }
+
+        function tug() {
+            const h1 = document.querySelector('.jvb');
+            h1.innerHTML = `👁️ Men o‘ylagan son ${randomNumber} edi. Sen ${attempts} marta urinding.`;
+        }
+
+    </script>
+</body>
+
+</html>

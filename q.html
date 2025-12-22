@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frontend Master Quiz - Pro Edition</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap">
+    <style>
+        :root {
+            --primary: #c026d3;
+            --secondary: #2dd4bf;
+            --danger: #ff4757;
+            --bg: #020617;
+            --card-bg: rgba(15, 23, 42, 0.9);
+            --text: #f8fafc;
+            --bs-color: #60a5fa;
+            --tw-color: #2dd4bf;
+            --git-color: #a855f7;
+        }
+
+        * { box-sizing: border-box; scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding-bottom: 100px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(192, 38, 211, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(45, 212, 191, 0.15) 0%, transparent 40%);
+            background-attachment: fixed;
+        }
+
+        @keyframes vibrate {
+            0% { transform: translateX(0); }
+            10% { transform: translateX(-6px) rotate(-1deg); }
+            20% { transform: translateX(6px) rotate(1deg); }
+            30% { transform: translateX(-6px) rotate(-1deg); }
+            40% { transform: translateX(6px) rotate(1deg); }
+            50% { transform: translateX(-6px) rotate(-1deg); }
+            60% { transform: translateX(6px) rotate(1deg); }
+            70% { transform: translateX(-6px) rotate(-1deg); }
+            80% { transform: translateX(6px) rotate(1deg); }
+            90% { transform: translateX(-6px) rotate(-1deg); }
+            100% { transform: translateX(0); }
+        }
+
+        header {
+            height: 40vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(to bottom, #0f172a, var(--bg));
+        }
+
+        h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            margin: 0;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .container { max-width: 850px; margin: -40px auto 0; padding: 0 20px; }
+
+        .question-block {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 35px;
+            margin-bottom: 25px;
+            backdrop-filter: blur(10px);
+            transition: 0.3s;
+        }
+
+        .question-block.unanswered {
+            border: 2px solid var(--danger);
+            animation: vibrate 0.4s linear;
+        }
+
+        .options { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+
+        label {
+            padding: 18px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+        }
+
+        label:hover { border-color: var(--secondary); background: rgba(255, 255, 255, 0.08); }
+
+        .btn-submit {
+            position: sticky; bottom: 30px; width: 100%; padding: 22px;
+            background: linear-gradient(90deg, var(--primary), #7e22ce);
+            color: white; border: none; border-radius: 20px; font-weight: 800;
+            cursor: pointer; box-shadow: 0 10px 40px rgba(0,0,0,0.5); z-index: 100;
+        }
+
+        /* RESULT SECTION */
+        #result-box {
+            display: none;
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 35px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.1);
+            animation: fadeIn 0.8s ease;
+        }
+
+        .stats-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* SVG Circular Progress */
+        .circle-svg {
+            width: 120px;
+            height: 120px;
+            transform: rotate(-90deg);
+        }
+
+        .circle-bg {
+            fill: none;
+            stroke: rgba(255,255,255,0.05);
+            stroke-width: 8;
+        }
+
+        .circle-progress {
+            fill: none;
+            stroke-width: 8;
+            stroke-linecap: round;
+            stroke-dasharray: 314;
+            stroke-dashoffset: 314;
+            transition: stroke-dashoffset 1.5s ease-out;
+        }
+
+        .percent-label {
+            position: absolute;
+            font-size: 1.2rem;
+            font-weight: 800;
+            transform: translate(0, 0);
+        }
+
+        .stat-box {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        @media (max-width: 768px) { .options { grid-template-columns: 1fr; } }
+        a{
+            text-decoration: none;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Frontend Master Quiz</h1>
+    <p style="opacity: 0.6; letter-spacing: 3px;">BOOTSTRAP • TAILWIND • GIT</p>
+</header>
+
+<div class="container">
+    <form id="quizForm">
+        <h2 style="color: var(--bs-color); border-left: 4px solid var(--bs-color); padding-left: 15px;">01. Bootstrap 5</h2>
+        <div id="section-1"></div>
+
+        <h2 style="color: var(--tw-color); border-left: 4px solid var(--tw-color); padding-left: 15px;">02. Tailwind CSS</h2>
+        <div id="section-2"></div>
+
+        <h2 style="color: var(--git-color); border-left: 4px solid var(--git-color); padding-left: 15px;">03. Git & GitHub</h2>
+        <div id="section-3"></div>
+
+        <button type="button" class="btn-submit" onclick="calculateResult()">NATIJANI TEKSHIRISH</button>
+    </form>
+
+    <div id="result-box">
+        <h2 style="border:none; text-align:center; margin:0;">Sizning Natijangiz</h2>
+        
+        <div class="stats-container">
+            <div class="stat-item">
+                <div class="stat-box">
+                    <svg class="circle-svg">
+                        <circle class="circle-bg" cx="60" cy="60" r="50"></circle>
+                        <circle class="circle-progress" id="circle-bs" cx="60" cy="60" r="50" stroke="var(--bs-color)"></circle>
+                    </svg>
+                    <div class="percent-label" id="text-bs">0%</div>
+                </div>
+                <span style="color: var(--bs-color); font-weight:700;">Bootstrap</span>
+            </div>
+
+            <div class="stat-item">
+                <div class="stat-box">
+                    <svg class="circle-svg">
+                        <circle class="circle-bg" cx="60" cy="60" r="50"></circle>
+                        <circle class="circle-progress" id="circle-tw" cx="60" cy="60" r="50" stroke="var(--tw-color)"></circle>
+                    </svg>
+                    <div class="percent-label" id="text-tw">0%</div>
+                </div>
+                <span style="color: var(--tw-color); font-weight:700;">Tailwind</span>
+            </div>
+
+            <div class="stat-item">
+                <div class="stat-box">
+                    <svg class="circle-svg">
+                        <circle class="circle-bg" cx="60" cy="60" r="50"></circle>
+                        <circle class="circle-progress" id="circle-git" cx="60" cy="60" r="50" stroke="var(--git-color)"></circle>
+                    </svg>
+                    <div class="percent-label" id="text-git">0%</div>
+                </div>
+                <span style="color: var(--git-color); font-weight:700;">Git & GitHub</span>
+            </div>
+        </div>
+
+        <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 20px;">
+            <p id="messageText" style="font-size: 1.2rem; font-weight: 600; margin: 0;"></p>
+        </div>
+
+        <button style="background: white; color: black; border: none; padding: 15px 40px; border-radius: 12px; font-weight: 800; cursor: pointer; margin-top: 30px;"><a href="index.html">Back To Portfolio</a></button>
+        <button onclick="window.location.reload()" style="background: white; color: black; border: none; padding: 15px 40px; border-radius: 12px; font-weight: 800; cursor: pointer; margin-top: 30px;">QAYTADAN BOSHLASH</button>
+    </div>
+</div>
+
+<script>
+    // SAVOLLAR MASSIVI (Hech narsa o'zgarmadi)
+    const questions = [
+        { q: "Bootstrapni loyihaga ulashning eng tezkor usuli qaysi?", a: "CDN orqali ulash", o: ["Local o'rnatish", "CDN orqali ulash", "NPM orqali", "Faqat CSSni ko'chirib olish"], n: "q1" },
+        { q: "Bootstrapda 'Container-fluid' klassining vazifasi?", a: "100% kenglikni egallaydi", o: ["O'zgarmas kenglik", "100% kenglikni egallaydi", "Faqat mobil qurilmalar uchun", "Chegaralarni o'chiradi"], n: "q2" },
+        { q: "Bootstrap grid tizimida jami nechta ustun (column) bor?", a: "12 ta", o: ["10 ta", "12 ta", "16 ta", "24 ta"], n: "q3" },
+        { q: "Breakpoint 'lg' necha pikseldan boshlanadi?", a: "992px", o: ["768px", "992px", "1200px", "576px"], n: "q4" },
+        { q: "Matnni o'ng tomonga (end) tekislash klassi?", a: "text-end", o: ["text-right", "text-center", "text-end", "text-start"], n: "q5" },
+        { q: "Rasmni 'responsive' (moslashuvchan) qilish klassi qaysi?", a: "img-fluid", o: ["img-responsive", "img-fluid", "img-auto", "img-fit"], n: "q6" },
+        { q: "Bootstrapda Table qatorlarini ketma-ket rangli qilish klassi?", a: "table-striped", o: ["table-color", "table-hover", "table-striped", "table-bordered"], n: "q7" },
+        { q: "Tugmalar guruhini yaratish uchun ishlatiladigan class?", a: "btn-group", o: ["btn-list", "btn-group", "btn-inline", "button-container"], n: "q8" },
+        { q: "Alert xabarini yopish tugmasi (X icon) uchun klass?", a: "btn-close", o: ["btn-exit", "btn-close", "close-icon", "alert-close"], n: "q9" },
+        { q: "Card komponentida asosiy kontent qayerga yoziladi?", a: "card-body", o: ["card-main", "card-content", "card-body", "card-text"], n: "q10" },
+        { q: "Carousel komponentini avtomatik aylantirishni boshlash?", a: "data-bs-ride=\"carousel\"", o: ["auto-start", "data-bs-ride=\"carousel\"", "play-slide", "data-bs-auto"], n: "q11" },
+        { q: "Modal oynasini ekranning o'rtasiga chiqarish klassi?", a: "modal-dialog-centered", o: ["modal-center", "modal-middle", "modal-dialog-centered", "modal-auto"], n: "q12" },
+        { q: "Navbar'ni tepada qotirib qo'yish (sticky emas)?", a: "fixed-top", o: ["sticky-top", "fixed-top", "navbar-fixed", "stay-top"], n: "q13" },
+        { q: "Bootstrapda 'Progress bar' qaysi teg ichida yoziladi?", a: ".progress", o: [".bar", ".progress-line", ".progress", ".loading"], n: "q14" },
+        { q: "Sahifalash (Pagination) uchun asosiy klass nomi?", a: "pagination", o: ["pages", "pager", "pagination", "page-nav"], n: "q15" },
+        { q: "Tailwind CSS qanday yondashuvga (approach) asoslangan?", a: "Utility-first", o: ["Object-oriented", "Utility-first", "Component-based", "In-line styles"], n: "q16" },
+        { q: "Tailwindda 'p-4' klassi nimani anglatadi?", a: "Padding 1rem (16px)", o: ["Padding 4px", "Padding 1rem (16px)", "Position 4", "Paragraph 4"], n: "q17" },
+        { q: "Tailwindda ranglar uchun eng to'q (dark) variant raqami?", a: "950", o: ["900", "950", "1000", "500"], n: "q18" },
+        { q: "Flexbox'da elementlar orasiga masofa qo'shish klassi?", a: "gap-*", o: ["space-between", "margin-in", "gap-*", "dist-4"], n: "q19" },
+        { q: "Grid tizimida 4 ta teng ustun yaratish klassi?", a: "grid-cols-4", o: ["grid-4", "columns-4", "grid-cols-4", "display-4"], n: "q20" },
+        { q: "Tailwindda 'rounded-full' qanday shakl beradi?", a: "Doira yoki Oval", o: ["Kvadrat", "Kichik radius", "Doira yoki Oval", "Uchburchak"], n: "q21" },
+        { q: "Soya (shadow) berish uchun asosiy klass?", a: "shadow-*", o: ["box-shadow", "shadow-*", "elevation", "depth"], n: "q22" },
+        { q: "Breakpoint 'md' Tailwindda necha pikselga teng?", a: "768px", o: ["640px", "768px", "1024px", "1280px"], n: "q23" },
+        { q: "Hover effektini qanday yozamiz?", a: "hover:bg-blue-500", o: ["on-hover:", "hover:bg-blue-500", "mouse-over:", "active-hover:"], n: "q24" },
+        { q: "Focus holatidagi chegara rangini o'zgartirish?", a: "focus:border-*", o: ["active:border", "focus:border-*", "on-focus:", "click:border"], n: "q25" },
+        { q: "Tailwindda balandlikni to'liq ekran (100vh) qilish?", a: "h-screen", o: ["h-full", "h-100vh", "h-screen", "h-auto"], n: "q26" },
+        { q: "Flex elementlarini o'rtaga (vertikal va gorizontal) olish?", a: "justify-center items-center", o: ["text-center", "align-center", "justify-center items-center", "flex-center"], n: "q27" },
+        { q: "Tailwindda shrift qalinligini oshirish (700)?", a: "font-bold", o: ["text-bold", "font-bold", "weight-700", "font-thick"], n: "q28" },
+        { q: "Tailwind config faylining nomi?", a: "tailwind.config.js", o: ["tailwind.js", "tailwind.config.js", "config.tailwind", "styles.js"], n: "q29" },
+        { q: "Utility-first mantig'i nima?", a: "Tayyor sinflar orqali CSS yozish", o: ["Klassik CSS", "Tayyor sinflar orqali CSS yozish", "Faqat JS ishlatish", "Ranglar bilan ishlash"], n: "q30" },
+        { q: "Git bu - ...", a: "Versiyalarni nazorat qilish tizimi", o: ["Hosting xizmati", "Dasturlash tili", "Versiyalarni nazorat qilish tizimi", "Ma'lumotlar bazasi"], n: "q31" },
+        { q: "Yangi Git repository yaratish buyrug'i?", a: "git init", o: ["git new", "git init", "git start", "git create"], n: "q32" },
+        { q: "Fayllarni staging area'ga (commitga tayyorlash) qo'shish?", a: "git add .", o: ["git save", "git push", "git add .", "git stage"], n: "q33" },
+        { q: "Commit qilish buyrug'i (izoh bilan)?", a: "git commit -m \"text\"", o: ["git commit -m \"text\"", "git save", "git push", "git record"], n: "q34" },
+        { q: "Repository holatini (statusini) tekshirish?", a: "git status", o: ["git check", "git log", "git status", "git show"], n: "q35" },
+        { q: "Commitlar tarixini ko'rish buyrug'i?", a: "git log", o: ["git history", "git list", "git log", "git show"], n: "q36" },
+        { q: "Yangi branch yaratish va unga o'tish?", a: "git checkout -b name", o: ["git branch new", "git checkout -b name", "git move", "git go"], n: "q37" },
+        { q: "Branchlarni asosiy branchga birlashtirish?", a: "git merge", o: ["git combine", "git merge", "git join", "git push"], n: "q38" },
+        { q: "Lokal kodni GitHub'ga yuborish buyrug'i?", a: "git push", o: ["git send", "git push", "git upload", "git sync"], n: "q39" },
+        { q: "GitHubdan mavjud loyihani ko'chirib olish?", a: "git clone", o: ["git clone", "git download", "git pull", "git copy"], n: "q40" }
+    ];
+
+    function renderQuestions() {
+        const s1 = document.getElementById('section-1');
+        const s2 = document.getElementById('section-2');
+        const s3 = document.getElementById('section-3');
+        questions.forEach((item, index) => {
+            const html = `<div class="question-block" id="question-${item.n}">
+                <span class="q-text">${index + 1}. ${item.q}</span>
+                <div class="options">${item.o.map(opt => `<label><input type="radio" name="${item.n}" value="${opt}">${opt}</label>`).join('')}</div>
+            </div>`;
+            if (index < 15) s1.innerHTML += html;
+            else if (index < 30) s2.innerHTML += html;
+            else s3.innerHTML += html;
+        });
+    }
+
+    function setCircle(id, textId, percent) {
+        const circle = document.getElementById(id);
+        const text = document.getElementById(textId);
+        const offset = 314 - (percent / 100 * 314);
+        circle.style.strokeDashoffset = offset;
+        text.innerText = percent + "%";
+    }
+
+    function calculateResult() {
+        let bs = 0, tw = 0, git = 0;
+        let firstUnanswered = null;
+
+        questions.forEach((item, index) => {
+            const block = document.getElementById(`question-${item.n}`);
+            block.classList.remove('unanswered');
+            const selected = document.querySelector(`input[name="${item.n}"]:checked`);
+            
+            if (selected) {
+                if (selected.value === item.a) {
+                    if (index < 15) bs++;
+                    else if (index < 30) tw++;
+                    else git++;
+                }
+            } else {
+                block.classList.add('unanswered');
+                if (!firstUnanswered) firstUnanswered = block;
+            }
+        });
+
+        if (firstUnanswered) {
+            firstUnanswered.scrollIntoView({ behavior: "smooth", block: "center" });
+            return;
+        }
+
+        document.getElementById('quizForm').style.display = 'none';
+        document.getElementById('result-box').style.display = 'block';
+
+        const bsPerc = Math.round((bs / 15) * 100);
+        const twPerc = Math.round((tw / 15) * 100);
+        const gitPerc = Math.round((git / 10) * 100);
+
+        // Animatsiyani biroz kechiktirib ishga tushirish
+        setTimeout(() => {
+            setCircle('circle-bs', 'text-bs', bsPerc);
+            setCircle('circle-tw', 'text-tw', twPerc);
+            setCircle('circle-git', 'text-git', gitPerc);
+        }, 100);
+
+        const totalPerc = Math.round(((bs+tw+git)/40)*100);
+        document.getElementById('messageText').innerText = `Umumiy natija: ${totalPerc}%. ${totalPerc >= 80 ? 'Siz mutaxassissiz! 🚀' : 'Yana o\'qing! 💪'}`;
+        window.scrollTo(0, 0);
+    }
+
+    renderQuestions();
+</script>
+</body>
+</html>

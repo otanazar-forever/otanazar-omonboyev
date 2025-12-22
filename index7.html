@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Game</title>
+    <style>
+        /* --- Body va konteyner --- */
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+
+        .har1 {
+            border: 5px solid #333;
+            width: 1000px;
+            max-width: 90%;
+            height: 600px;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px;
+            background: white;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            box-sizing: border-box;
+        }
+
+        /* --- Rasm va nom --- */
+        .image-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        img {
+            width: 300px;
+            height: auto;
+            border-radius: 15px;
+            transition: transform 0.5s ease;
+        }
+
+        img:hover {
+            transform: scale(1.05);
+        }
+
+        #name {
+            font-size: 26px;
+            font-weight: bold;
+            margin-top: 15px;
+            color: #333;
+            text-align: center;
+        }
+
+        /* --- Tugmalar konteyneri --- */
+        .buttons-container {
+            display: flex;
+            gap: 30px;
+        }
+
+        /* --- Gradient animatsiyali tugmalar --- */
+        .stopBtn, .startBtn, .exitBtn {
+            background: linear-gradient(45deg, #ff6a00, #ee0979, #ff6a00);
+            background-size: 200% 200%;
+            animation: gradientMove 3s ease infinite;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 15px 45px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+
+        .stopBtn:hover,
+        .startBtn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .stopBtn:active,
+        .startBtn:active {
+            transform: translateY(0) scale(0.98);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* --- Responsive --- */
+        @media (max-width: 600px) {
+            img {
+                width: 200px;
+            }
+            .stopBtn, .startBtn {
+                padding: 12px 30px;
+                font-size: 16px;
+            }
+        }
+        a{
+            text-decoration: none;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="har1">
+        <div class="image-container">
+            <img id="slider" src="./car.jpg" alt="Изображение">
+            <div id="name">Mashina</div>
+        </div>
+        <div class="buttons-container">
+            <button id="stopBtn" class="stopBtn">Stop⛔</button>
+            <button id="startBtn" class="startBtn">Start⏹️</button>
+            <button class="exitBtn"><a href="index.html">Exit❌</a></button>
+        </div>
+    </div>
+
+    <script>
+        const images = [
+            { src: "./car.jpg", name: "Mashina" },
+            { src: "./cat.jpg", name: "Mushuk" },
+            { src: "./chair.jpg", name: "Kursi" },
+            { src: "./dog.jpg", name: "It" },
+            { src: "./monkey.jpg", name: "Maymun" },
+            { src: "./snowman.jpg", name: "Qorbobo" },
+            { src: "./lion white.jpg", name: "Sher" },
+            { src: "./snicker.jpg", name: "Snicker" },
+            { src: "./stairs.jpg", name: "Zina" }
+        ];
+
+        let index = 0;
+        let intervalId = null;
+
+        const slider = document.getElementById("slider");
+        const nameDiv = document.getElementById("name");
+        const stopBtn = document.getElementById("stopBtn");
+        const startBtn = document.getElementById("startBtn");
+
+        function startSlideshow() {
+            if (!intervalId) {
+                intervalId = setInterval(() => {
+                    index = (index + 1) % images.length;
+                    slider.src = images[index].src;
+                    nameDiv.textContent = images[index].name;
+                }, 100); // 2 soniya
+            }
+        }
+
+        function stopSlideshow() {
+            clearInterval(intervalId);
+            intervalId = null;
+        }
+
+        // Автозапуск слайдера
+        startSlideshow();
+
+        stopBtn.addEventListener("click", stopSlideshow);
+        startBtn.addEventListener("click", startSlideshow);
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matematika</title>
+    <style>
+        /* ================= RESET ================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* ================= BODY ================= */
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            flex-direction: column;
+        }
+
+        /* ================= HEADER ================= */
+        header {
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        /* ================= CARD ================= */
+        header>div {
+            width: 320px;
+            padding: 30px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            animation: cardFade 1.2s ease;
+            transition: transform 0.3s ease;
+        }
+
+        header>div:hover {
+            transform: translateY(-10px) scale(1.02);
+        }
+
+        /* ================= TEXT ================= */
+        label {
+            font-size: 16px;
+            font-weight: 600;
+            opacity: 0.9;
+        }
+
+        h2 {
+            margin: 15px 0;
+            font-size: 18px;
+            color: #ffdd57;
+        }
+
+        /* ================= INPUT ================= */
+        input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            margin: 15px 0;
+            border-radius: 12px;
+            border: none;
+            outline: none;
+            font-size: 16px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.9);
+            transition: 0.3s;
+        }
+
+        input[type="number"]:focus {
+            box-shadow: 0 0 15px rgba(255, 221, 87, 0.8);
+            transform: scale(1.03);
+        }
+
+        /* ================= RESULT ================= */
+        p {
+            margin-top: 8px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #ffffff;
+            opacity: 0;
+            transition: opacity 0.3s, transform 0.3s;
+        }
+
+        /* ================= ANIMATIONS ================= */
+        .fade-in {
+            opacity: 1 !important;
+            transform: translateY(0);
+        }
+
+        .fade-out {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        @keyframes cardFade {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ================= RESPONSIVE ================= */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 25px;
+            }
+        }
+
+        .exit {
+            background: linear-gradient(45deg, #ff6a00, #ee0979, #ff6a00);
+            background-size: 200% 200%;
+            animation: gradientMove 3s ease infinite;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 15px 45px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+        }
+
+        .exit:hover {
+            transform: scale(1.05);
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+    </style>
+</head>
+
+<body>
+    <button class="exit" onclick="location.href='index.html'">Exit</button>
+
+    <header>
+        <div>
+            <label for="input1">Son kiriting</label>
+            <input type="number" id="input1" oninput="oshirish()" placeholder="Son yozing">
+            <h2>Kiritilgan son 2 ga oshib boradi</h2>
+            <p id="result1"></p>
+            <p id="result2"></p>
+            <p id="result3"></p>
+            <p id="result4"></p>
+        </div>
+        <div>
+            <label for="input2">Son kiriting</label>
+            <input type="number" id="input2" oninput="kopaytirish()" placeholder="Son yozing">
+            <h2>Kiritilgan son 2 ga ko'payib boradi</h2>
+            <p id="result5"></p>
+            <p id="result6"></p>
+            <p id="result7"></p>
+            <p id="result8"></p>
+        </div>
+    </header>
+
+    <script>
+        function oshirish() {
+            const input = parseInt(document.getElementById('input1').value);
+            if (!isNaN(input)) {
+                for (let i = 1; i <= 4; i++) {
+                    const el = document.getElementById(`result${i}`);
+                    el.classList.remove('fade-in');
+                    el.classList.add('fade-out');
+
+                    setTimeout(() => {
+                        el.textContent = input + i * 2;
+                        el.classList.remove('fade-out');
+                        el.classList.add('fade-in');
+                    }, 200);
+                }
+            }
+        }
+
+        function kopaytirish() {
+            const input = parseInt(document.getElementById('input2').value);
+            if (!isNaN(input)) {
+                for (let i = 1; i <= 4; i++) {
+                    const el = document.getElementById(`result${i + 4}`);
+                    el.classList.remove('fade-in');
+                    el.classList.add('fade-out');
+
+                    setTimeout(() => {
+                        el.textContent = input * Math.pow(2, i);
+                        el.classList.remove('fade-out');
+                        el.classList.add('fade-in');
+                    }, 200);
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

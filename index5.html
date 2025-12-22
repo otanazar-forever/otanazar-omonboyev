@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3D Animated Cute Face</title>
+<style>
+/* ==================== */
+/* === ОБЩИЕ СТИЛИ === */
+/* ==================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: radial-gradient(circle, #111 0%, #000 100%);
+    overflow: hidden;
+    perspective: 900px;
+    font-family: Arial, sans-serif;
+}
+
+/* ================== */
+/* === КОНТЕЙНЕР === */
+.face-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    transform-style: preserve-3d;
+}
+
+/* ================== */
+/* === ЛИЦО === */
+.face {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform-style: preserve-3d;
+    animation: fadeIn 1.5s ease forwards;
+}
+
+/* ===================== */
+/* === ГЛАЗА === */
+.eyes-container {
+    display: flex;
+    gap: 90px;
+    transform: translateZ(40px);
+}
+
+.eye {
+    width: 150px;
+    height: 150px;
+    background: #fff;
+    border-radius: 50%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow:
+        inset -12px -12px 30px rgba(0, 0, 0, 0.4),
+        inset 12px 12px 30px rgba(255, 255, 255, 0.25),
+        0 10px 50px rgba(255, 0, 0, 0.25);
+}
+
+/* Анимации появления глаз */
+.eye.left {
+    animation: leftIn 1.2s ease forwards;
+    transform: translateX(-350px) rotateY(20deg);
+}
+.eye.right {
+    animation: rightIn 1.2s ease forwards;
+    transform: translateX(350px) rotateY(-20deg);
+}
+
+@keyframes leftIn {
+    0% { transform: translateX(-350px) rotateY(20deg); opacity:0; }
+    100% { transform: translateX(0) rotateY(0); opacity:1; }
+}
+@keyframes rightIn {
+    0% { transform: translateX(350px) rotateY(-20deg); opacity:0; }
+    100% { transform: translateX(0) rotateY(0); opacity:1; }
+}
+
+/* Зрачок */
+.pupil {
+    width: 60px;
+    height: 60px;
+    background: #000;
+    border-radius: 50%;
+    border: 5px solid red;
+    box-shadow: 0 0 12px red, 0 0 25px rgba(255,0,0,0.7);
+    position: absolute;
+}
+
+/* Анимация появления лица */
+@keyframes fadeIn {
+    0% { opacity:0; transform: translateZ(-80px); }
+    100% { opacity:1; transform: translateZ(0); }
+}
+
+/* ================== */
+/* === РОТ === */
+.mouth {
+    width: 240px;
+    height: 150px;
+    background: #550000;
+    border-bottom-left-radius: 160px;
+    border-bottom-right-radius: 160px;
+    border-top-left-radius: 80px;
+    border-top-right-radius: 80px;
+    margin-top: 50px;
+    position: relative;
+    box-shadow: inset 0 0 40px #300000, 0 0 35px red;
+    animation: mouthIn 1.6s ease forwards;
+    opacity:0;
+    transform: scale(0.6) translateY(40px);
+}
+
+@keyframes mouthIn {
+    0% { opacity:0; transform: scale(0.6) translateY(40px); }
+    100% { opacity:1; transform: scale(1) translateY(0); }
+}
+
+/* Верхняя губа */
+.lip-upper {
+    width: 200px;
+    height: 45px;
+    background: #990000;
+    border-radius: 40px;
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: inset 0 0 15px #ff4444, 0 0 20px rgba(255,0,0,0.6);
+}
+
+/* Зубы */
+.teeth-row {
+    width: 170px;
+    height: 70px;
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    top: 38px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.tooth {
+    width: 32px;
+    height: 30px;
+    background: #ffffff;
+    border-radius: 0 0 10px 10px;
+    box-shadow: inset -5px -5px 10px rgba(0,0,0,0.25), inset 5px 5px 12px rgba(255,255,255,0.6), 0 0 10px rgba(255,255,255,0.4);
+    animation: toothIn 0.8s ease forwards;
+    opacity:0;
+}
+
+.tooth {
+    box-shadow: inset -4px -4px 10px rgba(255,255,255,0.15), inset 4px 4px 10px rgba(0,0,0,0.8), 0 0 12px rgba(0,0,0,0.9);
+}
+
+@keyframes toothIn {
+    0% { transform: translateY(20px) scale(0.8); opacity:0; }
+    100% { transform: translateY(0) scale(1); opacity:1; }
+}
+
+/* ================== */
+/* === КНОПКА EXIT === */
+.exit-btn {
+    padding: 12px 30px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff;
+    background: linear-gradient(45deg, #ff0055, #ff66aa);
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    box-shadow: 0 0 10px #ff0055, 0 0 20px #ff66aa, 0 0 30px rgba(255,0,85,0.5);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    z-index: 10;
+}
+
+.exit-btn::before {
+    content:'';
+    position:absolute;
+    top:-50%;
+    left:-50%;
+    width:200%;
+    height:200%;
+    background: rgba(255,255,255,0.1);
+    transform: rotate(45deg);
+    transition: all 0.5s ease;
+}
+
+.exit-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px #ff0055, 0 0 25px #ff66aa, 0 0 40px rgba(255,0,85,0.7);
+}
+
+.exit-btn:hover::before {
+    top: -70%;
+    left: -70%;
+}
+
+</style>
+</head>
+<body>
+
+<div class="face-container">
+    <div class="face">
+        <div class="eyes-container">
+            <div class="eye left"><div class="pupil"></div></div>
+            <div class="eye right"><div class="pupil"></div></div>
+        </div>
+        <div class="mouth">
+            <div class="lip-upper"></div>
+            <div class="teeth-row">
+                <div class="tooth" style="animation-delay:1.6s;"></div>
+                <div class="tooth" style="animation-delay:1.7s;"></div>
+                <div class="tooth" style="animation-delay:1.8s;"></div>
+                <div class="tooth" style="animation-delay:1.9s;"></div>
+                <div class="tooth" style="animation-delay:2.0s;"></div>
+            </div>
+        </div>
+    </div>
+    <button class="exit-btn" onclick="location.href='./index.html'">Exit</button>
+</div>
+
+<script>
+// Глаза следят за мышью
+document.addEventListener("mousemove", function(e){
+    const eyes = document.querySelectorAll(".eye");
+    eyes.forEach(eye => {
+        const pupil = eye.querySelector(".pupil");
+        const rect = eye.getBoundingClientRect();
+        const eyeX = rect.left + rect.width/2;
+        const eyeY = rect.top + rect.height/2;
+        const angle = Math.atan2(e.pageY - eyeY, e.pageX - eyeX);
+        const maxMove = 30;
+        const x = Math.cos(angle)*maxMove;
+        const y = Math.sin(angle)*maxMove;
+        pupil.style.transform = `translate(${x}px, ${y}px)`;
+    });
+});
+</script>
+
+</body>
+</html>
