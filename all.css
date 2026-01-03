@@ -1,0 +1,394 @@
+/* 1. Global Sozlamalar va O'zgaruvchilar */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+
+:root {
+    --lime-color: #32CD32;
+    --sidebar-bg: #11101d;
+    --sidebar-light: #1d1b31;
+    --text-color: #ffffff;
+    --home-bg: #0f0f15; /* Asosiy fon qorong'u rejim uchun */
+    --transition: all 0.5s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    background-color: var(--home-bg);
+}
+
+/* 2. Sidebar Stili */
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 78px;
+    background: var(--sidebar-bg);
+    padding: 6px 14px;
+    z-index: 99;
+    transition: var(--transition);
+}
+
+.sidebar.open {
+    width: 250px;
+}
+
+.sidebar .logo-details {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.sidebar .logo-details .icon {
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.sidebar .logo-details .logo_name {
+    color: #fff;
+    font-size: 20px;
+    font-weight: 600;
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.sidebar.open .logo-details .icon,
+.sidebar.open .logo-details .logo_name {
+    opacity: 1;
+}
+
+.sidebar .logo-details #btn {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    font-size: 23px;
+    text-align: center;
+    cursor: pointer;
+    transition: var(--transition);
+    color: #fff;
+}
+
+.sidebar.open .logo-details #btn {
+    text-align: right;
+}
+
+.sidebar i {
+    color: #fff;
+    height: 60px;
+    min-width: 50px;
+    font-size: 28px;
+    text-align: center;
+    line-height: 60px;
+}
+
+.sidebar .nav-list {
+    margin-top: 20px;
+    padding: 0;
+}
+
+.sidebar li {
+    position: relative;
+    margin: 8px 0;
+    list-style: none;
+}
+
+/* Tooltip (Sidebar yopiq bo'lganda chiqadigan yozuv) */
+.sidebar li .tooltip {
+    position: absolute;
+    top: -20px;
+    left: calc(100% + 15px);
+    z-index: 3;
+    background: #fff;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 15px;
+    font-weight: 400;
+    opacity: 0;
+    white-space: nowrap;
+    pointer-events: none;
+    transition: 0s;
+    color: #11101d;
+}
+
+.sidebar li:hover .tooltip {
+    opacity: 1;
+    pointer-events: auto;
+    transition: all 0.4s ease;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.sidebar.open li .tooltip {
+    display: none;
+}
+
+/* Sidebar Qidiruv (Search) */
+.sidebar input {
+    font-size: 15px;
+    color: #fff;
+    font-weight: 400;
+    outline: none;
+    height: 50px;
+    width: 50px;
+    border: none;
+    border-radius: 12px;
+    transition: var(--transition);
+    background: var(--sidebar-light);
+}
+
+.sidebar.open input {
+    padding: 0 20px 0 50px;
+    width: 100%;
+}
+
+.sidebar .bx-search {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    font-size: 22px;
+    background: var(--sidebar-light);
+    color: #fff;
+    cursor: pointer;
+}
+
+.sidebar .bx-search:hover {
+    background: #fff;
+    color: var(--sidebar-bg);
+}
+
+/* Sidebar Linklar */
+.sidebar li a {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    border-radius: 12px;
+    align-items: center;
+    text-decoration: none;
+    transition: all 0.4s ease;
+    background: var(--sidebar-bg);
+}
+
+.sidebar li a:hover {
+    background: #fff;
+}
+
+.sidebar li a .links_name {
+    color: #fff;
+    font-size: 15px;
+    font-weight: 400;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.4s;
+}
+
+.sidebar.open li a .links_name {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.sidebar li a:hover .links_name,
+.sidebar li a:hover i {
+    transition: all 0.5s ease;
+    color: #11101d;
+}
+
+.sidebar li i {
+    height: 50px;
+    line-height: 50px;
+    font-size: 18px;
+    border-radius: 12px;
+}
+
+/* Profile Section */
+.sidebar li.profile {   
+    position: fixed;
+    height: 60px;
+    width: 78px;
+    left: 0;
+    bottom: -8px;
+    padding: 10px 14px;
+    background: var(--sidebar-light);
+    transition: var(--transition);
+    overflow: hidden;
+}
+
+.sidebar.open li.profile {
+    width: 250px;
+}
+/* Profil bo'limi foni */
+.sidebar li.profile {
+    position: fixed;
+    height: 62px;
+    width: 78px;
+    left: 0;
+    bottom: -8px;
+    padding: 10px 14px;
+    background: #1d1b31;
+    transition: all 0.5s ease;
+    overflow: hidden;
+}
+
+.sidebar.open li.profile {
+    width: 250px;
+}
+
+/* Ism va kasb joylashuvi */
+.sidebar li .profile-details {
+    display: flex;
+    align-items: center;
+    white-space: nowrap; /* Matn pastga tushib ketmasligi uchun */
+}
+
+.sidebar li img {
+    height: 45px;
+    width: 45px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-right: 10px;
+}
+
+/* ISHMAYOTGAN QISM MANA SHU: */
+.sidebar li.profile .name,
+.sidebar li.profile .job {
+    font-size: 12px;
+    font-weight: 400;
+    color: #fff; /* Matn oq rangda bo'lishi shart */
+    opacity: 0; /* Dastlab yopiq holda ko'rinmaydi */
+    transition: all 0.5s ease;
+}
+
+.sidebar li.profile .job {
+    font-size: 12px;
+}
+
+/* Sidebar OCHILGANDA ism ko'rinishi */
+.sidebar.open li.profile .name,
+.sidebar.open li.profile .job {
+    opacity: 1;
+}
+
+.sidebar .profile #log_out {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    background: #1d1b31;
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
+    border-radius: 0px;
+    transition: all 0.5s ease;
+}
+
+.sidebar.open .profile #log_out {
+    width: 50px;
+    background: none;
+}
+.sidebar li img {
+    height: 45px;
+    width: 45px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-right: 10px;
+}
+
+.sidebar .profile #log_out {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    background: var(--sidebar-light);
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.sidebar.open .profile #log_out {
+    width: 50px;
+    background: none;
+}
+
+/* 3. Home Section (Kontent maydoni) */
+.home-section {
+    position: relative;
+    background: var(--home-bg);
+    min-height: 100vh;
+    top: 0;
+    left: 78px;
+    width: calc(100% - 78px);
+    transition: var(--transition);
+    z-index: 2;
+    color: white;
+}
+
+.sidebar.open ~ .home-section {
+    left: 250px;
+    width: calc(100% - 250px);
+}
+
+/* 4. Project Card Dizayni */
+.project-card {
+    border: 2px solid var(--lime-color);
+    background: var(--sidebar-light);
+    border-radius: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(50, 205, 50, 0.3);
+}
+
+.project-card img {
+    height: 200px;
+    object-fit: cover;
+    border-bottom: 1px solid rgba(50, 205, 50, 0.2);
+}
+
+/* Lime Rangli Tugmalar va Matnlar */
+.btn-lime {
+    background-color: var(--lime-color);
+    color: white;
+    border-radius: 10px;
+    font-weight: bold;
+    border: none;
+    padding: 10px;
+    transition: 0.3s;
+}
+
+.btn-lime:hover {
+    background-color: #28a428;
+    color: white;
+    transform: scale(1.02);
+}
+
+.lime-text {
+    color: var(--lime-color);
+}
+
+/* 5. Responsive (Moslashuvchanlik) */
+@media (max-width: 420px) {
+    .sidebar li .tooltip {
+        display: none;
+    }
+    .home-section {
+        left: 0;
+        width: 100%;
+    }
+    .sidebar.open ~ .home-section {
+        left: 0;
+        width: 100%;
+    }
+}
