@@ -206,6 +206,23 @@
         }
 
         /* Secondary button style (used for Contact Me in Hero) */
+
+        .var1 {
+            padding: 4px 25px;
+            border-radius: 50px;
+            background: transparent;
+            border: 2px solid #2afc85;
+            color: #2afc85;
+            box-shadow: 0 0 10px rgba(42, 252, 133, 0.3);
+        }
+
+        .var1:hover {
+            background: #2afc85;
+            color: #0c0f17;
+            box-shadow: 0 0 20px rgba(42, 252, 133, 0.6);
+            transform: translateY(-3px);
+        }
+
         .btn-secondary {
             padding: 15px 35px;
             border-radius: 50px;
@@ -214,6 +231,7 @@
             color: #2afc85;
             box-shadow: 0 0 10px rgba(42, 252, 133, 0.3);
         }
+
 
         .btn-secondary:hover {
             background: #2afc85;
@@ -914,6 +932,8 @@
         .contact-social {
             margin-top: 50px;
         }
+
+
 
         .contact-form {
             background: linear-gradient(135deg, #1a1f2e 0%, #232838 100%);
