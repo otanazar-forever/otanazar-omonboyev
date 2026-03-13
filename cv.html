@@ -1,457 +1,456 @@
 <!DOCTYPE html>
 <html lang="uz">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio</title>
+    <title>Otanazar Omonboyev | Portfolio</title>
 
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 
     <style>
-        /* Asosiy fon va umumiy dizayn */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            background: radial-gradient(circle at top right, #0d1117, #010409);
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0b0f1a 0%, #1a1f2f 100%);
+            color: #ffffff;
             overflow-x: hidden;
+            line-height: 1.7;
+            position: relative;
         }
 
-        /* Navigatsiya va Profil rasmi */
-        .navbar {
-            padding: 40px 0;
-            background: transparent !important;
+        /* Animated background lines */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(0, 123, 255, 0.03) 0%, transparent 30%),
+                radial-gradient(circle at 80% 70%, rgba(0, 255, 200, 0.03) 0%, transparent 30%);
+            pointer-events: none;
+            z-index: -1;
         }
 
-        .rounded-circle {
-            box-shadow: 0 0 25px rgba(13, 110, 253, 0.5);
+        /* Navbar/Profile Section */
+        .profile-section {
+            padding: 40px 0 20px;
+        }
+
+        .profile-img {
+            width: 180px;
+            height: 180px;
+            object-fit: cover;
+            border: 4px solid transparent;
+            background: linear-gradient(45deg, #0d6efd, #20c997, #0dcaf0) border-box;
+            -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+            border-radius: 50%;
+            padding: 5px;
             transition: 0.5s ease;
+            box-shadow: 0 20px 40px rgba(13, 110, 253, 0.3);
         }
 
-        .rounded-circle:hover {
+        .profile-img:hover {
             transform: scale(1.05) rotate(5deg);
-            box-shadow: 0 0 40px rgba(13, 110, 253, 0.8);
+            box-shadow: 0 30px 60px rgba(13, 110, 253, 0.5);
         }
 
-        /* Card va Sectionlar uchun shisha effekti */
-        .card, .list-group-item, .contact-card {
-            background: rgba(255, 255, 255, 0.03) !important;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1) !important;
-            border-radius: 15px !important;
-        }
-
-        .contact-card {
-            width: 260px;
-            height: 100px;
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.02) !important;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.05) !important;
+            border-radius: 24px !important;
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        /* Hover effektlari */
-        .contact-card:hover {
-            background: rgba(13, 110, 253, 0.15) !important;
-            border-color: #0d6efd !important;
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.05) !important;
+            border-color: rgba(13, 110, 253, 0.3) !important;
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px -10px #0d6efd80;
         }
 
-        /* Progress Bar dizayni */
+        /* Contact Cards */
+        .contact-card {
+            min-width: 240px;
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 1rem 1.5rem;
+            transition: 0.4s;
+            color: white;
+            text-decoration: none;
+        }
+
+        .contact-card i {
+            font-size: 2rem;
+            color: #0d6efd;
+            transition: 0.4s;
+        }
+
+        .contact-card:hover i {
+            transform: scale(1.2) rotate(10deg);
+            color: #fff;
+        }
+
+        .contact-card:hover {
+            background: rgba(13, 110, 253, 0.15);
+            border-color: #0d6efd;
+        }
+
+        /* Progress Bars */
         .progress {
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            overflow: visible;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            height: 12px;
+            overflow: hidden;
+            margin: 0.5rem 0 1.5rem;
         }
 
         .progress-bar {
-            border-radius: 10px;
+            border-radius: 50px;
+            background: linear-gradient(90deg, #0d6efd, #20c997);
             position: relative;
-            overflow: visible;
-            animation: progressAnimation 2s ease-out;
+            animation: fillBar 2s ease-out;
         }
 
-        @keyframes progressAnimation {
+        @keyframes fillBar {
             from { width: 0; }
         }
 
-        /* Loyihalar bo'limi rasm dizayni */
-        .col-md-6 a .card img {
+        /* Language Cards */
+        .language-item {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 20px;
+            padding: 1.5rem;
+            transition: 0.4s;
+        }
+
+        .language-item:hover {
+            background: rgba(13, 110, 253, 0.1);
+            transform: scale(1.02);
+        }
+
+        /* Project Cards */
+        .project-card {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 24px;
+            padding: 1.2rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: 0.4s;
+            height: 100%;
+        }
+
+        .project-card:hover {
+            background: rgba(13, 110, 253, 0.1);
+            border-color: #0d6efd;
+            transform: translateY(-10px);
+        }
+
+        .project-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            object-fit: cover;
             border: 2px solid #0d6efd;
             padding: 3px;
         }
 
-        /* HR chizig'i animatsiyasi */
-        hr {
-            height: 3px !important;
-            opacity: 1 !important;
-            background: linear-gradient(90deg, transparent, #0d6efd, transparent);
-        }
-
-        /* Bog'lanish tugmalari */
-        .contact-card i {
-            transition: 0.3s;
-        }
-
-        .contact-card:hover i {
-            transform: rotate(360deg) scale(1.2);
-            color: #fff;
-        }
-
-        /* Sarlavhalar */
-        h1, h2 {
+        /* Buttons */
+        .btn-download {
+            background: linear-gradient(45deg, #0d6efd, #20c997);
+            border: none;
+            padding: 1rem 3rem;
+            border-radius: 50px;
+            font-weight: 700;
             letter-spacing: 1px;
-            text-transform: uppercase;
+            transition: 0.4s;
+            color: white;
+            box-shadow: 0 10px 20px -5px #0d6efd80;
         }
 
-        .text-secondary {
-            color: #8b949e !important;
+        .btn-download:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px -5px #0d6efd;
+            background: linear-gradient(45deg, #20c997, #0d6efd);
         }
 
-        /* Foydalanuvchi interfeysini yumshoq qilish */
-        section {
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        /* Section Titles */
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff, #a8b8ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        hr {
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #0d6efd, #20c997);
+            opacity: 1;
+            margin: 0 auto 2rem;
+            border: none;
+        }
+
+        /* Text Colors */
+        .text-muted-custom {
+            color: rgba(255, 255, 255, 0.6) !important;
+        }
+
+        /* Animation */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .float-animation {
+            animation: float 4s ease-in-out infinite;
         }
     </style>
-
 </head>
+<body>
 
-<body class="bg-dark text-white">
-
-    <nav class="navbar bg-dark">
-        <div class="container justify-content-center">
-
-            <img src="./me.jpg" alt="me" width="160" height="160" class="rounded-circle border border-3 border-primary">
-
-        </div>
-    </nav>
-
-    <section class="py-4">
+    <!-- Profile Section -->
+    <section class="profile-section">
         <div class="container text-center">
-
-            <h1 class="fw-bold">Otanazar Omonboyev</h1>
-
-            <p class="text-secondary">
-                IT Talabasi | Frontend Developer | Web Dasturchi
-            </p>
-
+            <img src="./me.jpg" alt="Otanazar Omonboyev" class="profile-img mb-4">
+            <h1 class="display-4 fw-bold mb-2" style="background: linear-gradient(135deg, #fff, #9bb7ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Otanazar Omonboyev</h1>
+            <p class="lead text-muted-custom mb-0">IT Talabasi | Frontend Developer | Web Dasturchi</p>
+            <p class="text-muted-custom"><i class="fa-solid fa-location-dot me-2 text-primary"></i>Xiva, O'zbekiston</p>
         </div>
     </section>
 
+    <!-- Contact Cards -->
     <section class="py-4">
-        <div class="container d-flex justify-content-center gap-4 flex-wrap">
-
-            <div class="card contact-card bg-dark text-white border-primary shadow-lg">
-                <div class="card-body d-flex align-items-center gap-3">
-
-                    <div class="bg-primary rounded-circle d-flex justify-content-center align-items-center"
-                        style="width:50px;height:50px;font-size:20px;">
-                        <i class="fa-solid fa-phone"></i>
-                    </div>
-
+        <div class="container">
+            <div class="d-flex justify-content-center gap-4 flex-wrap">
+                <div class="contact-card d-flex align-items-center gap-3">
+                    <i class="fa-solid fa-phone"></i>
                     <div>
-                        <h6 class="mb-0">Telefon</h6>
-                        <small class="text-secondary">(+998) 91 999 54 88</small>
+                        <h6 class="mb-0 fw-bold">Telefon</h6>
+                        <small class="text-muted-custom">+998 91 999 54 88</small>
                     </div>
-
                 </div>
+                <a href="https://t.me/otanazar_omonboyev" target="_blank" class="contact-card d-flex align-items-center gap-3">
+                    <i class="fa-brands fa-telegram"></i>
+                    <div>
+                        <h6 class="mb-0 fw-bold">Telegram</h6>
+                        <small class="text-muted-custom">@otanazar_omonboyev</small>
+                    </div>
+                </a>
+                <a href="https://instagram.com/otanazaromonboyev" target="_blank" class="contact-card d-flex align-items-center gap-3">
+                    <i class="fa-brands fa-instagram"></i>
+                    <div>
+                        <h6 class="mb-0 fw-bold">Instagram</h6>
+                        <small class="text-muted-custom">@otanazaromonboyev</small>
+                    </div>
+                </a>
+                <a href="https://github.com/otanazar-forever" target="_blank" class="contact-card d-flex align-items-center gap-3">
+                    <i class="fa-brands fa-github"></i>
+                    <div>
+                        <h6 class="mb-0 fw-bold">GitHub</h6>
+                        <small class="text-muted-custom">otanazar-forever</small>
+                    </div>
+                </a>
             </div>
-
-            <a href="https://t.me/otanazar_omonboyev" target="_blank" class="text-decoration-none">
-                <div class="card contact-card bg-dark text-white border-primary shadow-lg">
-                    <div class="card-body d-flex align-items-center gap-3">
-
-                        <div class="bg-primary rounded-circle d-flex justify-content-center align-items-center"
-                            style="width:50px;height:50px;font-size:20px;">
-                            <i class="fa-brands fa-telegram"></i>
-                        </div>
-
-                        <div>
-                            <h6 class="mb-0">Telegram</h6>
-                            <small class="text-secondary">@otanazar_omonboyev</small>
-                        </div>
-
-                    </div>
-                </div>
-            </a>
-
-            <a href="https://instagram.com/otanazaromonboyev" target="_blank" class="text-decoration-none">
-                <div class="card contact-card bg-dark text-white border-primary shadow-lg">
-                    <div class="card-body d-flex align-items-center gap-3">
-
-                        <div class="bg-primary rounded-circle d-flex justify-content-center align-items-center"
-                            style="width:50px;height:50px;font-size:20px;">
-                            <i class="fa-brands fa-instagram"></i>
-                        </div>
-
-                        <div>
-                            <h6 class="mb-0">Instagram</h6>
-                            <small class="text-secondary">@otanazaromonboyev</small>
-                        </div>
-
-                    </div>
-                </div>
-            </a>
-
-            <a href="https://github.com/otanazar-forever" target="_blank" class="text-decoration-none">
-                <div class="card contact-card bg-dark text-white border-primary shadow-lg">
-                    <div class="card-body d-flex align-items-center gap-3">
-
-                        <div class="bg-primary rounded-circle d-flex justify-content-center align-items-center"
-                            style="width:50px;height:50px;font-size:20px;">
-                            <i class="fa-brands fa-github"></i>
-                        </div>
-
-                        <div>
-                            <h6 class="mb-0">GitHub</h6>
-                            <small class="text-secondary">github.com/otanazar-forever</small>
-                        </div>
-
-                    </div>
-                </div>
-            </a>
-
         </div>
     </section>
 
-    <section class="py-5 bg-dark text-white">
+    <!-- About & Experience -->
+    <section class="py-5">
         <div class="container">
-
-            <div class="mb-5 text-center">
-                <h2 class="fw-bold">Men Haqimda</h2>
-                <hr class="border-primary w-25 mx-auto">
-                <p class="mt-3">
-                    Xiva IT PARK da 2024 yildan beri tahsil olayotgan IT talabasiman. Python, HTML, CSS, SASS,
-                    JavaScript kabi dasturlash tillarini, shuningdek, Spider va PyCharm dasturlarida ishlashni bilaman.
-                    Coursera platformasida professional sertifikatlarga ega bo'lib, doimiy ravishda o'z bilimlarimni
-                    yangilab boraman. Web dasturlash va ma'lumotlar tahliliga qiziqaman.
-                </p>
+            <h2 class="section-title text-center">Men Haqimda</h2>
+            <hr>
+            <div class="row justify-content-center">
+                <div class="col-lg-8 text-center">
+                    <p class="lead text-muted-custom mb-5">
+                        Xiva IT PARK da 2024 yildan beri tahsil olayotman. Python, HTML, CSS, SASS, JavaScript kabi texnologiyalarni o'zlashtirganman. Coursera platformasida professional sertifikatlarga ega bo'lib, doimiy ravishda o'z bilimlarimni yangilab boraman. Maqsadim - zamonaviy va foydali web loyihalar yaratish.
+                    </p>
+                </div>
             </div>
-
-            <div class="text-center mb-4">
-                <h2 class="fw-bold">Tajriba va Faoliyat</h2>
-                <hr class="border-primary w-25 mx-auto">
-                <p class="mt-2"><span class="fw-bold">2024 - Hozirgacha</span> : Xiva IT PARK da IT talaba sifatida
-                    faoliyat.</p>
+            
+            <div class="row mt-5">
+                <div class="col-md-6 mb-4">
+                    <div class="glass-card p-4 h-100">
+                        <h3 class="fw-bold mb-4"><i class="fa-solid fa-briefcase me-2 text-primary"></i>Tajriba</h3>
+                        <ul class="list-unstyled">
+                            <li class="mb-3"><i class="fa-regular fa-calendar-check text-primary me-2"></i><span class="fw-bold">2024 - Hozirgacha:</span> Xiva IT Park - IT Talaba</li>
+                            <li class="mb-3"><i class="fa-regular fa-calendar-check text-primary me-2"></i><span class="fw-bold">2023 - 2024:</span> Freelance Web Developer</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="glass-card p-4 h-100">
+                        <h3 class="fw-bold mb-4"><i class="fa-solid fa-award me-2 text-primary"></i>Sertifikatlar</h3>
+                        <ul class="list-unstyled">
+                            <li class="mb-3"><i class="fa-solid fa-certificate text-primary me-2"></i>Python for Everybody (Coursera)</li>
+                            <li class="mb-3"><i class="fa-solid fa-certificate text-primary me-2"></i>Frontend Development (Coursera)</li>
+                            <li class="mb-3"><i class="fa-solid fa-certificate text-primary me-2"></i>JavaScript Algorithms (FreeCodeCamp)</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
+        </div>
+    </section>
 
-            <div class="row justify-content-center mt-4">
+    <!-- Skills -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="section-title text-center">Ko'nikmalar</h2>
+            <hr>
+            <div class="row g-4">
                 <div class="col-md-6">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item bg-dark text-white border-secondary mb-1">Python dasturlash</li>
-                        <li class="list-group-item bg-dark text-white border-secondary mb-1">Web texnologiyalar (HTML, CSS,
-                            JS)</li>
-                        <li class="list-group-item bg-dark text-white border-secondary mb-1">SASS preprosessor</li>
-                        <li class="list-group-item bg-dark text-white border-secondary mb-1">Spider IDE da loyihalar</li>
-                        <li class="list-group-item bg-dark text-white border-secondary mb-1">Coursera sertifikatlari</li>
-                    </ul>
+                    <div class="glass-card p-4">
+                        <h5 class="mb-3"><i class="fa-brands fa-python me-2 text-primary"></i>Python</h5>
+                        <div class="progress"><div class="progress-bar" style="width:90%">90%</div></div>
+                        <h5 class="mb-3"><i class="fa-brands fa-js me-2 text-warning"></i>JavaScript</h5>
+                        <div class="progress"><div class="progress-bar bg-warning" style="width:80%">80%</div></div>
+                        <h5 class="mb-3"><i class="fa-brands fa-html5 me-2 text-danger"></i>HTML5</h5>
+                        <div class="progress"><div class="progress-bar bg-danger" style="width:95%">95%</div></div>
+                        <h5 class="mb-3"><i class="fa-brands fa-css3-alt me-2 text-info"></i>CSS3</h5>
+                        <div class="progress"><div class="progress-bar bg-info" style="width:90%">90%</div></div>
+                        <h5 class="mb-3"><i class="fa-brands fa-sass me-2 text-pink"></i>SASS</h5>
+                        <div class="progress"><div class="progress-bar" style="background:#cf649a; width:85%">85%</div></div>
+                    </div>
+                </div>
+                
+                <!-- TILLAR BO'LIMI YANGI DIZAYN -->
+                <div class="col-md-6">
+                    <div class="glass-card p-4">
+                        <h3 class="fw-bold text-center mb-4"><i class="fa-solid fa-language me-2 text-primary"></i>Tillar</h3>
+                        
+                        <div class="language-item mb-3">
+                            <div class="d-flex align-items-center gap-3">
+                                <i class="fa-solid fa-flag fa-2x text-success"></i>
+                                <div class="flex-grow-1">
+                                    <h6 class="fw-bold mb-1">O'zbek tili</h6>
+                                    <div class="progress"><div class="progress-bar bg-success" style="width:100%">100%</div></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="language-item mb-3">
+                            <div class="d-flex align-items-center gap-3">
+                                <i class="fa-solid fa-flag fa-2x text-primary"></i>
+                                <div class="flex-grow-1">
+                                    <h6 class="fw-bold mb-1">Ingliz tili</h6>
+                                    <div class="progress"><div class="progress-bar bg-primary" style="width:85%">85%</div></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="language-item">
+                            <div class="d-flex align-items-center gap-3">
+                                <i class="fa-solid fa-flag fa-2x text-danger"></i>
+                                <div class="flex-grow-1">
+                                    <h6 class="fw-bold mb-1">Rus tili</h6>
+                                    <div class="progress"><div class="progress-bar bg-danger" style="width:75%">75%</div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-        </div>
-    </section>
-    <section class="py-5 bg-dark text-white">
-        <div class="container">
-
-            <div class="row">
-                <div class="col-md-6 mb-4">
-                    <h2 class="fw-bold text-center mb-4">Ko'nikmalar</h2>
-                    <hr class="border-primary w-25 mx-auto mb-4">
-
-                    <div class="mb-3">
-                        <h6>Python</h6>
-                        <div class="progress" style="height:20px;">
-                            <div class="progress-bar bg-primary" role="progressbar" style="width:90%;"
-                                aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">90%</div>
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <h6>JavaScript</h6>
-                        <div class="progress" style="height:20px;">
-                            <div class="progress-bar bg-warning" role="progressbar" style="width:80%;"
-                                aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">80%</div>
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <h6>HTML</h6>
-                        <div class="progress" style="height:20px;">
-                            <div class="progress-bar bg-success" role="progressbar" style="width:95%;"
-                                aria-valuenow="95" aria-valuemin="0" aria-valuemax="100">95%</div>
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <h6>CSS</h6>
-                        <div class="progress" style="height:20px;">
-                            <div class="progress-bar bg-info" role="progressbar" style="width:90%;" aria-valuenow="90"
-                                aria-valuemin="0" aria-valuemax="100">90%</div>
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <h6>SASS</h6>
-                        <div class="progress" style="height:20px;">
-                            <div class="progress-bar bg-danger" role="progressbar" style="width:85%;" aria-valuenow="85"
-                                aria-valuemin="0" aria-valuemax="100">85%</div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="col-md-6 mb-4">
-                    <h2 class="fw-bold text-center mb-4">Til Bilish</h2>
-                    <hr class="border-primary w-25 mx-auto mb-4">
-
-                    <div class="mb-3">
-                        <h6>O'zbek</h6>
-                        <div class="progress" style="height:20px;">
-                            <div class="progress-bar bg-success" role="progressbar" style="width:100%;"
-                                aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100%</div>
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <h6>Ingliz Tili</h6>
-                        <div class="progress" style="height:20px;">
-                            <div class="progress-bar bg-info" role="progressbar" style="width:85%;" aria-valuenow="85"
-                                aria-valuemin="0" aria-valuemax="100">85%</div>
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <h6>Rus Tili</h6>
-                        <div class="progress" style="height:20px;">
-                            <div class="progress-bar bg-warning" role="progressbar" style="width:75%;"
-                                aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">75%</div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
         </div>
     </section>
 
-
-    <section class="py-5 bg-dark text-white">
+    <!-- Projects -->
+    <section class="py-5">
         <div class="container">
-
-            <h2 class="fw-bold text-center mb-4">Loyihalar</h2>
-            <hr class="border-primary w-25 mx-auto mb-5">
-
-            <div class="row g-4 justify-content-center">
-
+            <h2 class="section-title text-center">Loyihalar</h2>
+            <hr>
+            <div class="row g-4">
                 <div class="col-md-6">
                     <a href="https://oltinsaroy.lovable.app" target="_blank" class="text-decoration-none">
-                        <div
-                            class="card bg-dark text-white border-primary shadow-lg h-100 d-flex flex-row align-items-center p-3 gap-3">
-
-                            <img src="./image copy 22.png" alt="Oltinsaroy" class="rounded-circle"
-                                style="width:100px; height:100px; object-fit:cover;">
-
+                        <div class="project-card d-flex align-items-center gap-4">
+                            <img src="./image copy 22.png" alt="Oltinsaroy" class="project-img">
                             <div>
-                                <h5 class="fw-bold mb-1">Oltinsaroy</h5>
-                                <p class="text-secondary mb-0">Web loyihasi</p>
+                                <h5 class="fw-bold text-white mb-1">Oltinsaroy</h5>
+                                <p class="text-muted-custom mb-0">Web loyiha</p>
                             </div>
-
                         </div>
                     </a>
                 </div>
-
                 <div class="col-md-6">
                     <a href="https://premium-daily-routine.lovable.app" target="_blank" class="text-decoration-none">
-                        <div
-                            class="card bg-dark text-white border-primary shadow-lg h-100 d-flex flex-row align-items-center p-3 gap-3">
-                            <img src="./image copy 25.png" alt="Premium Daily Routine" class="rounded-circle"
-                                style="width:100px; height:100px; object-fit:cover;">
+                        <div class="project-card d-flex align-items-center gap-4">
+                            <img src="./image copy 25.png" alt="Premium Daily Routine" class="project-img">
                             <div>
-                                <h5 class="fw-bold mb-1">Premium Daily Routine</h5>
-                                <p class="text-secondary mb-0">Web loyihasi</p>
+                                <h5 class="fw-bold text-white mb-1">Premium Daily Routine</h5>
+                                <p class="text-muted-custom mb-0">Web loyiha</p>
                             </div>
                         </div>
                     </a>
                 </div>
-
                 <div class="col-md-6">
                     <a href="https://stepup-web-maker.lovable.app" target="_blank" class="text-decoration-none">
-                        <div
-                            class="card bg-dark text-white border-primary shadow-lg h-100 d-flex flex-row align-items-center p-3 gap-3">
-                            <img src="./image copy 23.png" alt="StepUp Web Maker" class="rounded-circle"
-                                style="width:100px; height:100px; object-fit:cover;">
+                        <div class="project-card d-flex align-items-center gap-4">
+                            <img src="./image copy 23.png" alt="StepUp Web Maker" class="project-img">
                             <div>
-                                <h5 class="fw-bold mb-1">StepUp Web Maker</h5>
-                                <p class="text-secondary mb-0">Web loyihasi</p>
+                                <h5 class="fw-bold text-white mb-1">StepUp Web Maker</h5>
+                                <p class="text-muted-custom mb-0">Web loyiha</p>
                             </div>
                         </div>
                     </a>
                 </div>
-
                 <div class="col-md-6">
                     <a href="https://restaurantlamaison.lovable.app" target="_blank" class="text-decoration-none">
-                        <div
-                            class="card bg-dark text-white border-primary shadow-lg h-100 d-flex flex-row align-items-center p-3 gap-3">
-                            <img src="./image copy 24.png" alt="Restaurant La Maison" class="rounded-circle"
-                                style="width:100px; height:100px; object-fit:cover;">
+                        <div class="project-card d-flex align-items-center gap-4">
+                            <img src="./image copy 24.png" alt="Restaurant La Maison" class="project-img">
                             <div>
-                                <h5 class="fw-bold mb-1">Restaurant La Maison</h5>
-                                <p class="text-secondary mb-0">Web loyihasi</p>
+                                <h5 class="fw-bold text-white mb-1">Restaurant La Maison</h5>
+                                <p class="text-muted-custom mb-0">Web loyiha</p>
                             </div>
                         </div>
                     </a>
                 </div>
-
             </div>
         </div>
     </section>
 
-
-    <section class="py-5 bg-dark text-white">
-        <div class="container text-center">
-
-            <h2 class="fw-bold mb-4">Bog'lanish</h2>
-            <hr class="border-primary w-25 mx-auto mb-4">
-
-            <div class="d-flex justify-content-center flex-wrap gap-4">
-
-                <a href="https://t.me/otanazar_omonboyev" target="_blank"
-                    class="text-white text-decoration-none d-flex align-items-center gap-2 border border-primary rounded p-3 shadow contact-card">
-                    <i class="fab fa-telegram fs-3"></i> Telegram
-                </a>
-
-                <a href="https://instagram.com/otanazaromonboyev" target="_blank"
-                    class="text-white text-decoration-none d-flex align-items-center gap-2 border border-primary rounded p-3 shadow contact-card">
-                    <i class="fab fa-instagram fs-3"></i> Instagram
-                </a>
-
-                <a href="https://github.com/otanazar-forever" target="_blank"
-                    class="text-white text-decoration-none d-flex align-items-center gap-2 border border-primary rounded p-3 shadow contact-card">
-                    <i class="fab fa-github fs-3"></i> GitHub
-                </a>
-
-                <a href="https://robocontest.uz/profile/otanazar" target="_blank"
-                    class="text-white text-decoration-none d-flex align-items-center gap-2 border border-primary rounded p-3 shadow contact-card">
-                    <i class="fas fa-robot fs-3"></i> RoboContest
-                </a>
-
-                <a href="https://kep.uz/users/Otanazar" target="_blank"
-                    class="text-white text-decoration-none d-flex align-items-center gap-2 border border-primary rounded p-3 shadow contact-card">
-                    <i class="fas fa-graduation-cap fs-3"></i> KepUz
-                </a>
-
-                <a href="mailto:otanazaromonboyev5488@gmail.com"
-                    class="text-white text-decoration-none d-flex align-items-center gap-2 border border-primary rounded p-3 shadow contact-card">
-                    <i class="fas fa-envelope fs-3"></i> Email
-                </a>
-
+    <!-- Contact & Download CV -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="section-title text-center">Bog'lanish</h2>
+            <hr>
+            <div class="d-flex justify-content-center flex-wrap gap-3 mb-5">
+                <a href="https://t.me/otanazar_omonboyev" target="_blank" class="contact-card d-flex align-items-center gap-3"><i class="fab fa-telegram"></i> Telegram</a>
+                <a href="https://instagram.com/otanazaromonboyev" target="_blank" class="contact-card d-flex align-items-center gap-3"><i class="fab fa-instagram"></i> Instagram</a>
+                <a href="https://github.com/otanazar-forever" target="_blank" class="contact-card d-flex align-items-center gap-3"><i class="fab fa-github"></i> GitHub</a>
+                <a href="https://robocontest.uz/profile/otanazar" target="_blank" class="contact-card d-flex align-items-center gap-3"><i class="fas fa-robot"></i> RoboContest</a>
+                <a href="https://kep.uz/users/Otanazar" target="_blank" class="contact-card d-flex align-items-center gap-3"><i class="fas fa-graduation-cap"></i> KepUz</a>
+                <a href="mailto:otanazaromonboyev5488@gmail.com" class="contact-card d-flex align-items-center gap-3"><i class="fas fa-envelope"></i> Email</a>
             </div>
 
+            <!-- DOWNLOAD CV BUTTON -->
+            <div class="text-center mt-5">
+                <a href="#" class="btn btn-download btn-lg" download>
+                    <i class="fa-solid fa-download me-2"></i> CV ni Yuklab Olish (PDF)
+                </a>
+                <p class="text-muted-custom mt-3"><small>Oxirgi yangilanish: 2025</small></p>
+            </div>
         </div>
     </section>
 
-
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
 </body>
-
 </html>
